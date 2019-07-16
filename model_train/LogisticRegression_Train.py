@@ -6,20 +6,17 @@
 
 @version: 1.0
 @license: None
-@file: main_test.py
-@time: 2019/7/16 14:52
+@file: LogisticRegression_Train.py
+@time: 2019/7/16 15:44
 
 这一行开始写关于本文件的说明与解释
 """
+from model.LogisticRegression import LogisticRegression
 import torch
 import torch.nn as nn
-from model import LogisticRegression
 
-if __name__ == '__main__':
-    x = torch.tensor([[2,6,8],[3,5,7]]).long()
-    lr = LogisticRegression.LogisticRegression([10,10,10])
-
-    logistic_model = LogisticRegression.LogisticRegression([10,10,10])
+def LogisticRegression_Train(data_loader, num_rounds, optim, early_stop):
+    logistic_model = LogisticRegression.LogisticRegression([10, 10, 10])
 
     if torch.cuda.is_available():
         logistic_model.cuda()
@@ -29,7 +26,7 @@ if __name__ == '__main__':
     optimizer = torch.optim.SGD(logistic_model.parameters(), lr=1e-3, momentum=0.9)
 
     # 开始训练
-    for epoch in range(10000):
+    for epoch in range(num_rounds):
         if torch.cuda.is_available():
             x_data = Variable(x).cuda()
             y_data = Variable(y).cuda()
